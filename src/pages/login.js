@@ -103,9 +103,9 @@ export default class Login extends Component {
         return (
             this.state.isLoggedin ?
                 this.state.userData ?
-                    <ImageBackground source={require('../assets/login_bg.jpg')} style={styles.backgroundImage} >
+                    <ImageBackground source={require('../../assets/login_bg.jpg')} style={styles.backgroundImage} >
                         <SafeAreaView style={styles.container}>
-                            <Image source={require('../assets/supid_icon_transparent.png')} style={styles.logoImage} />
+                            <Image source={require('../../assets/supid_icon_transparent.png')} style={styles.logoImage} />
                             <Image source={{ uri: this.state.userData.profilePhoto }} style={styles.profile} />
                             <Text style={styles.heading}>Bem Vindo</Text>
                             <Text style={styles.loginInfo}>{this.state.userData.name}</Text>
@@ -116,9 +116,9 @@ export default class Login extends Component {
                     </ImageBackground>
                     : null
                 :
-                <ImageBackground source={require('../assets/login_bg.jpg')} style={styles.backgroundImage}>
+                <ImageBackground source={require('../../assets/login_bg.jpg')} style={styles.backgroundImage}>
                     <SafeAreaView style={styles.container}>
-                        <Image source={require('../assets/supid_icon_transparent.png')} style={styles.logoImage} />
+                        <Image source={require('../../assets/supid_icon_transparent.png')} style={styles.logoImage} />
                         <Text style={styles.heading}>Compre Online e Receba em sua casa!</Text>
                         <Text style={styles.loginInfo}>Acesse ou cadastre-se abaixo:</Text>
                         <TouchableOpacity activeOpacity={0.9} style={styles.facebookLoginButton} onPress={this.facebookLogIn}>
