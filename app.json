@@ -9,13 +9,13 @@
       "android",
       "web"
     ],
-    "version": "1.0.0",
+    "version": "0.0.1",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/supid_app_icon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#E6EAEB"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -27,9 +27,15 @@
       "supportsTablet": true,
       "config": {
         "googleSignIn": {
-          "reservedClientId": "936015559872-bev45dg4fc70cdbfoks9gfb8vmmg3iq4.apps.googleusercontent.com"
+          "reservedClientId": "936015559872-pj8lenf2kc5f6rdd1f3d9qeubgo53rqd.apps.googleusercontent.com"
         }
-      }
+      },
+      "bundleIdentifier": "com.devhazard.supid",
+      "buildNumber": "0.0.1"
+    },
+    "android": {
+      "package": "com.devhazard.supid",
+      "versionCode": 1
     }
   }
 }

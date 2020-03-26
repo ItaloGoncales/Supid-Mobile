@@ -2,15 +2,23 @@ import React, { Component, useState } from 'react';
 
 import { View, Text, SafeAreaView, Image, ImageBackground, StyleSheet, TouchableOpacity, Platform, Linking, Dimensions } from 'react-native';
 
+import { useNavigation } from '@react-navigation/native';
+
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 import * as Facebook from 'expo-facebook';
 import * as Google from "expo-google-app-auth";
 
+import { SupidButton } from '../components/supid';
+
 const IOS_CLIENT_ID =
-    "936015559872-bev45dg4fc70cdbfoks9gfb8vmmg3iq4.apps.googleusercontent.com";
+    // expo dev
+    // "936015559872-bev45dg4fc70cdbfoks9gfb8vmmg3iq4.apps.googleusercontent.com";
+    "936015559872-pj8lenf2kc5f6rdd1f3d9qeubgo53rqd.apps.googleusercontent.com";
 const ANDROID_CLIENT_ID =
-    "936015559872-v95n162k60rksv4mbcud48ivatuopqqf.apps.googleusercontent.com";
+    // expo dev
+    // "936015559872-v95n162k60rksv4mbcud48ivatuopqqf.apps.googleusercontent.com";
+    "936015559872-54avv7n93at9chpj136r5usetj3p81tg.apps.googleusercontent.com";
 
 export default class Login extends Component {
     constructor(props) {
@@ -19,6 +27,7 @@ export default class Login extends Component {
             isLoggedin: false,
             userData: null
         };
+        this.navigation = useNavigation()
     }
 
     googleLogin = async () => {
@@ -109,9 +118,7 @@ export default class Login extends Component {
                             <Image source={{ uri: this.state.userData.profilePhoto }} style={styles.profile} />
                             <Text style={styles.heading}>Bem Vindo</Text>
                             <Text style={styles.loginInfo}>{this.state.userData.name}</Text>
-                            <TouchableOpacity style={styles.facebookLoginButton} onPress={this.logout}>
-                                <Text style={styles.buttonText}>Desconectar</Text>
-                            </TouchableOpacity>
+                            <SupidButton onPress={this.logout} text="Desconectar" style={styles.facebookLoginButton} />
                         </SafeAreaView>
                     </ImageBackground>
                     : null
@@ -121,25 +128,23 @@ export default class Login extends Component {
                         <Image source={require('../../assets/supid_icon_transparent.png')} style={styles.logoImage} />
                         <Text style={styles.heading}>Compre Online e Receba em sua casa!</Text>
                         <Text style={styles.loginInfo}>Acesse ou cadastre-se abaixo:</Text>
-                        <TouchableOpacity activeOpacity={0.9} style={styles.facebookLoginButton} onPress={this.facebookLogIn}>
-                            <Text style={styles.buttonText}>Acessar com Facebook</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity activeOpacity={0.9} style={styles.googleLoginButton} onPress={this.googleLogin}>
-                            <Text style={styles.buttonText}>Acessar com Google</Text>
-                        </TouchableOpacity>
+                        <SupidButton onPress={this.facebookLogIn} text="Acessar com Facebook" style={styles.facebookLoginButton} />
+                        <SupidButton onPress={this.googleLogin} text="Acessar com Google" style={styles.googleLoginButton} />
                         <Text style={styles.customerInfo}>Se você possui um estabelecimento</Text>
-                        <TouchableOpacity activeOpacity={0.9} style={styles.supidSignUp} onPress={() => { }}>
-                            <Text style={styles.buttonText}>Cadastre-se aqui</Text>
-                        </TouchableOpacity>
+                        <SupidButton onPress={() => { this.navigation.navigate('LoginCustomer') }} style={styles.signUpButton} text="Faça Login" />
+                        <Text style={styles.privacyAndPolicyText}
+                            onPress={() => { this.navigation.navigate('SignUpCustomer') }}>
+                            ou clique aqui para se cadastrar
+                            </Text>
                         <View style={styles.privacyAndPolicy}>
                             <Text style={styles.privacyAndPolicyText}
                                 onPress={() => Linking.openURL('https://supid.com.br/privacy-and-policy.html')}>
                                 Termos de Uso
-                        </Text>
+                            </Text>
                             <Text style={styles.privacyAndPolicyText}
                                 onPress={() => Linking.openURL('https://supid.com.br/privacy-and-policy.html')}>
                                 Políticas de Privacidade
-                        </Text>
+                            </Text>
                         </View>
                     </SafeAreaView>
                 </ImageBackground>
@@ -160,9 +165,8 @@ let styles = StyleSheet.create({
         opacity: 25
     },
     logoImage: {
-        marginTop: screenWidth * -0.08,
         width: screenWidth * 0.8,
-        height: screenWidth * 0.2,
+        height: screenWidth * 0.22,
         alignSelf: 'center',
         resizeMode: 'stretch', // or 'stretch'
     },
@@ -198,36 +202,12 @@ let styles = StyleSheet.create({
     },
     facebookLoginButton: {
         backgroundColor: '#4267b2',
-        borderRadius: 5,
-        alignSelf: 'stretch',
-        marginTop: screenWidth * 0.02,
-        height: screenWidth * 0.12,
-        marginLeft: 30,
-        marginRight: 30,
-        elevation: 15,
-        justifyContent: 'center'
     },
     googleLoginButton: {
         backgroundColor: '#4285f4',
-        borderRadius: 5,
-        alignSelf: 'stretch',
-        marginTop: screenWidth * 0.02,
-        height: screenWidth * 0.12,
-        marginLeft: 30,
-        marginRight: 30,
-        elevation: 15,
-        justifyContent: 'center'
     },
-    supidSignUp: {
-        backgroundColor: '#C74A55',
-        borderRadius: 5,
-        alignSelf: 'stretch',
-        marginTop: screenWidth * 0.02,
-        height: screenWidth * 0.12,
-        marginLeft: 30,
-        marginRight: 30,
-        elevation: 15,
-        justifyContent: 'center'
+    signUpButton: {
+        backgroundColor: '#40AC59',
     },
     facebookLogoutButton: {
         backgroundColor: 'grey',
