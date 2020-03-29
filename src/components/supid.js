@@ -1,12 +1,9 @@
 import React, { Component, useState, useEffect, useRef } from 'react';
-
 import { StyleSheet, TouchableOpacity, Text, TextInput, Platform, Dimensions, View } from 'react-native';
-
 import { TextInputMask } from 'react-native-masked-text'
-
 import { CheckBox as RNECheckBox } from 'react-native-elements'
-
 import { useField } from '@unform/core';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
@@ -46,7 +43,7 @@ export function Input({ name, label, style = {}, labelStyle = {}, ...rest }) {
             ref: inputRef.current,
             path: '_lastNativeText',
             getValue(ref) {
-                return ref._lastNativeText.trim() || '';
+                return (ref._lastNativeText || '').trim();
             },
             setValue(ref, value) {
                 ref.setNativeProps({ text: value });
@@ -102,7 +99,6 @@ export function InputMask({ name, label, style = {}, labelStyle = {}, ...rest })
             ref: inputRef.current,
             path: 'value',
             getValue(ref) {
-                console.log(ref.isValid())
                 return ref.getRawValue() || '';
             },
             setValue(ref, value) {
@@ -141,7 +137,56 @@ export function CheckBox({ name, style = {}, ...rest }) {
     );
 }
 
-export default [SupidButton, Input, CheckBox]
+export function GooglePlacesInput({ onLocationSelected, currentLocation = true, onPress }) {
+    const [searchFocused, setSearchFocus] = useState(false);
+    return (
+        <GooglePlacesAutocomplete
+            placeholder="Endereço e número"
+            minLength={2} // minimum length of text to search
+            autoFocus={false}
+            returnKeyType={'search'} // Can be left out for default return key https://facebook.github.io/react-native/docs/textinput.html#returnkeytype
+            listViewDisplayed={searchFocused} // true/false/undefined
+            textImputProps={{
+                onFocus: () => { this.setState({ searchFocused: true }) },
+                onBlur: () => { this.setState({ searchFocused: false }) },
+                autoCapitalize: "none",
+                autoCorrect: false
+            }}
+            fetchDetails={true}
+            renderDescription={row => row.description} // custom description render
+            onPress={onPress}
+            getDefaultValue={() => {
+                return ''; // text input default value
+            }}
+            query={{
+                // available options: https://developers.google.com/places/web-service/autocomplete
+                key: 'AIzaSyBj4KHkQNI08Fjb8YRBCZlxCI-mDkCNdV4',
+                language: 'pt-BR', // language of the results
+            }}
+            styles={gACStyles}
+            currentLocation={currentLocation} // Will add a 'Current location' button at the top of the predefined places list
+            currentLocationLabel="Localização Atual"
+            nearbyPlacesAPI="GooglePlacesSearch" // Which API to use: GoogleReverseGeocoding or GooglePlacesSearch
+            GoogleReverseGeocodingQuery={
+                {
+                    // available options for GoogleReverseGeocoding API : https://developers.google.com/maps/documentation/geocoding/intro
+                }
+            }
+            GooglePlacesSearchQuery={{
+                // available options for GooglePlacesSearch API : https://developers.google.com/places/web-service/search
+                rankby: 'distance',
+            }}
+            filterReverseGeocodingByTypes={[
+                'locality',
+                'administrative_area_level_3',
+            ]} // filter the reverse geocoding results by types - ['locality', 'administrative_area_level_3'] if you want to display only cities
+            predefinedPlaces={[]}
+            debounce={200}
+        />
+    );
+}
+
+export default [SupidButton, Input, CheckBox, GooglePlacesInput]
 
 let styles = StyleSheet.create({
     button: {
@@ -182,3 +227,36 @@ let styles = StyleSheet.create({
         marginTop: screenWidth * 0.05,
     }
 });
+
+const gACStyles = StyleSheet.create({
+    textInputContainer: {
+        height: 54,
+        marginHorizontal: 20,
+        borderTopWidth: 0,
+        borderBottomWidth: 0,
+        backgroundColor: 'rgba(0,0,0,0)',
+        borderTopWidth: 0,
+        borderBottomWidth: 0,
+    },
+    textInput: {
+        marginLeft: 0,
+        marginRight: 0,
+        height: 38,
+        color: '#5d5d5d',
+        fontSize: 16,
+    },
+    listView: {
+        borderWidth: 1,
+        borderColor: "#DDD",
+        backgroundColor: "#FFF",
+        marginHorizontal: 20,
+        elevation: 2,
+    },
+    description: {
+        fontSize: 16
+    },
+    row: {
+        padding: 20,
+        height: 58
+    }
+})
