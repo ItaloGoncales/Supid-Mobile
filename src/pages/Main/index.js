@@ -41,6 +41,13 @@ const data = [
         time: 35,
         distance: 7.0
     },
+    {
+        id: '58694a0f-3da1-471f-bd96-045571e29c82',
+        category: 'Supermercado',
+        title: "Koch Centro",
+        time: 35,
+        distance: 7.0
+    },
 ];
 
 export default function Main() {
@@ -57,6 +64,47 @@ export default function Main() {
         );
     }
 
+    function renderPageContent() {
+        return <>
+            <ScrollView
+                style={styles.filtersContainer}
+                horizontal={true}
+                contentContainerStyle={styles.filtersContainerContent}
+                showsHorizontalScrollIndicator={false}
+                nestedScrollEnabled={true}>
+                <TouchableOpacity activeOpacity={0.9} style={styles.card}>
+                    <ImageBackground imageStyle={{ borderRadius: 5 }} style={styles.cardImage} source={require('../../assets/supermarket.png')}>
+                        <View style={styles.imageOpacity}>
+                            <Text style={styles.cardText}>Supermercado</Text>
+                        </View>
+                    </ImageBackground>
+                </TouchableOpacity>
+                <TouchableOpacity activeOpacity={0.9} style={styles.card}>
+                    <ImageBackground imageStyle={{ borderRadius: 5 }} style={styles.cardImage} source={require('../../assets/drugstore.png')}>
+                        <View style={styles.imageOpacity}>
+                            <Text style={styles.cardText}>Farmácia</Text>
+                        </View>
+                    </ImageBackground>
+                </TouchableOpacity>
+                <TouchableOpacity activeOpacity={0.9} style={styles.card}>
+                    <ImageBackground imageStyle={{ borderRadius: 5 }} style={styles.cardImage} source={require('../../assets/petshop.png')}>
+                        <View style={styles.imageOpacity}>
+                            <Text style={styles.cardText}>Petshop</Text>
+                        </View>
+                    </ImageBackground>
+                </TouchableOpacity>
+                <TouchableOpacity activeOpacity={0.9} style={styles.card}>
+                    <ImageBackground imageStyle={{ borderRadius: 5 }} style={styles.cardImage} source={require('../../assets/convenience.png')}>
+                        <View style={styles.imageOpacity}>
+                            <Text style={styles.cardText}>Conveniência</Text>
+                        </View>
+                    </ImageBackground>
+                </TouchableOpacity>
+            </ScrollView>
+            <Text style={styles.placesHeader}>Estabelecimentos</Text>
+        </>
+    }
+
     return (
         <View style={styles.container}>
             <TouchableOpacity activeOpacity={0.6} style={styles.address}>
@@ -67,51 +115,15 @@ export default function Main() {
                     </Text>
                 </View>
             </TouchableOpacity>
-            <ScrollView style={styles.pageContainer} nestedScrollEnabled={true}>
-                <ScrollView
-                    style={styles.filtersContainer}
-                    horizontal={true}
-                    contentContainerStyle={styles.filtersContainerContent}
-                    showsHorizontalScrollIndicator={false}
-                    nestedScrollEnabled={true}>
-                    <TouchableOpacity activeOpacity={0.9} style={styles.card}>
-                        <ImageBackground imageStyle={{ borderRadius: 5 }} style={styles.cardImage} source={require('../../assets/supermarket.png')}>
-                            <View style={styles.imageOpacity}>
-                                <Text style={styles.cardText}>Supermercado</Text>
-                            </View>
-                        </ImageBackground>
-                    </TouchableOpacity>
-                    <TouchableOpacity activeOpacity={0.9} style={styles.card}>
-                        <ImageBackground imageStyle={{ borderRadius: 5 }} style={styles.cardImage} source={require('../../assets/drugstore.png')}>
-                            <View style={styles.imageOpacity}>
-                                <Text style={styles.cardText}>Farmácia</Text>
-                            </View>
-                        </ImageBackground>
-                    </TouchableOpacity>
-                    <TouchableOpacity activeOpacity={0.9} style={styles.card}>
-                        <ImageBackground imageStyle={{ borderRadius: 5 }} style={styles.cardImage} source={require('../../assets/petshop.png')}>
-                            <View style={styles.imageOpacity}>
-                                <Text style={styles.cardText}>Petshop</Text>
-                            </View>
-                        </ImageBackground>
-                    </TouchableOpacity>
-                    <TouchableOpacity activeOpacity={0.9} style={styles.card}>
-                        <ImageBackground imageStyle={{ borderRadius: 5 }} style={styles.cardImage} source={require('../../assets/convenience.png')}>
-                            <View style={styles.imageOpacity}>
-                                <Text style={styles.cardText}>Conveniência</Text>
-                            </View>
-                        </ImageBackground>
-                    </TouchableOpacity>
-                </ScrollView>
-                <SafeAreaView style={styles.placesContainer}>
-                    <Text style={styles.placesHeader}>Estabelecimentos</Text>
-                    <FlatList
-                        data={data}
-                        renderItem={renderPlace}
-                        keyExtractor={item => item.id}
-                    />
-                </SafeAreaView>
-            </ScrollView>
+            <SafeAreaView style={styles.pageContainer}>
+                <FlatList
+                    data={data}
+                    renderItem={renderPlace}
+                    keyExtractor={item => item.id}
+                    style={styles.placesContainer}
+                    showsVerticalScrollIndicator={false}
+                    ListHeaderComponent={renderPageContent} />
+            </SafeAreaView>
         </View>
     );
 }

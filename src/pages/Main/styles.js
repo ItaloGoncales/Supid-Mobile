@@ -27,7 +27,7 @@ export default StyleSheet.create({
         color: "#5a5a5a"
     },
     pageContainer: {
-        height: "100%",
+        paddingBottom: 80,
     },
     filtersContainer: {
         height: screenHeight * 0.15
@@ -67,7 +67,6 @@ export default StyleSheet.create({
     },
     placesContainer: {
         marginHorizontal: 10,
-        paddingBottom: 50
     },
     placesHeader: {
         fontSize: 15,

@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 
+import { View, TouchableOpacity, TextInput, Text, Platform } from 'react-native';
+
+import constants from 'expo-constants';
+
+import { Feather } from '@expo/vector-icons';
+
 const Stack = createStackNavigator();
 
 import Login from './pages/Login'
@@ -14,7 +20,7 @@ export default class App extends Component {
     render() {
         return (
             <NavigationContainer>
-                <Stack.Navigator initialRouteName="Login">
+                <Stack.Navigator initialRouteName="Main">
                     <Stack.Screen
                         name="Login"
                         component={Login}
@@ -57,13 +63,39 @@ export default class App extends Component {
                         name="Main"
                         component={MainScreen}
                         options={({ route }) => ({
-                            headerShown: true,
-                            headerLeft: null,
-                            headerTitle: null,
-                            headerStyle: {
-                                elevation: 0,
-                                backgroundColor: "#40AC59"
-                            }
+                            header: () => (
+                                <View style={{
+                                    backgroundColor: '#40AC59',
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    justifyContent: "space-around",
+                                    height: Platform.OS === 'ios' ? 80 : 60,
+                                    paddingTop: Platform.OS === 'ios' ? constants.statusBarHeight + 10: 0,
+                                    paddingBottom: Platform.OS === 'ios' ? 10 : 0
+                                }}>
+                                    <TouchableOpacity
+                                        onPress={() => alert('This is a button!')}>
+                                        <Feather name="menu" size={20} color="#FFF"
+                                        style={{ paddingLeft: 15 }} />
+                                    </TouchableOpacity>
+                                    <TextInput
+                                        style={{
+                                            backgroundColor: "#FFF",
+                                            borderRadius: 30,
+                                            paddingHorizontal: 10,
+                                            width: "70%",
+                                            height: 30,
+                                            alignSelf: "center"
+                                        }}
+                                        placeholder="Buscar Estabelecimento"
+                                        placeholderTextColor="#C3C3C3"
+                                    />
+                                    <TouchableOpacity
+                                        onPress={() => alert('This is a button!')}>
+                                        <Feather name="shopping-cart" size={20} color="#FFF" 
+                                        style={{ paddingRight: 15 }} />
+                                    </TouchableOpacity>
+                                </View>),
                         })}
                     />
                 </Stack.Navigator>
