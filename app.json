@@ -36,6 +36,7 @@
     "android": {
       "package": "com.devhazard.supid",
       "versionCode": 1
-    }
+    },
+    "description": ""
   }
 }

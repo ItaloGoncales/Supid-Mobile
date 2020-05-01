@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 
-import { View, TouchableOpacity, TextInput, Text, Platform } from 'react-native';
+import { View, TouchableOpacity, TextInput, Text, Platform } from 'react-native'
 
 import constants from 'expo-constants';
 
@@ -15,6 +15,7 @@ import LoginCustomer from './pages/LoginCustomer'
 import SignUpCustomer from './pages/SignUpCustomer';
 import NewAddress from './pages/NewAddress';
 import MainScreen from './pages/Main';
+import Place from './pages/Place';
 
 export default class App extends Component {
     render() {
@@ -39,7 +40,6 @@ export default class App extends Component {
                         name="SignUpCustomer"
                         component={SignUpCustomer}
                         options={{
-                            headerShown: true,
                             title: "Cadastro de Cliente"
                         }}
                     />
@@ -47,7 +47,6 @@ export default class App extends Component {
                         name="NewAddress"
                         component={NewAddress}
                         options={({ route }) => ({
-                            headerShown: true,
                             headerLeft: null,
                             headerTitleAlign: "center",
                             headerTitleStyle: {
@@ -70,13 +69,13 @@ export default class App extends Component {
                                     alignItems: 'center',
                                     justifyContent: "space-around",
                                     height: Platform.OS === 'ios' ? 80 : 60,
-                                    paddingTop: Platform.OS === 'ios' ? constants.statusBarHeight + 10: 0,
+                                    paddingTop: Platform.OS === 'ios' ? constants.statusBarHeight + 10 : 0,
                                     paddingBottom: Platform.OS === 'ios' ? 10 : 0
                                 }}>
                                     <TouchableOpacity
                                         onPress={() => alert('This is a button!')}>
                                         <Feather name="menu" size={20} color="#FFF"
-                                        style={{ paddingLeft: 15 }} />
+                                            style={{ paddingLeft: 15 }} />
                                     </TouchableOpacity>
                                     <TextInput
                                         style={{
@@ -92,10 +91,38 @@ export default class App extends Component {
                                     />
                                     <TouchableOpacity
                                         onPress={() => alert('This is a button!')}>
-                                        <Feather name="shopping-cart" size={20} color="#FFF" 
-                                        style={{ paddingRight: 15 }} />
+                                        <Feather name="shopping-cart" size={20} color="#FFF"
+                                            style={{ paddingRight: 15 }} />
                                     </TouchableOpacity>
                                 </View>),
+                        })}
+                    />
+                    <Stack.Screen
+                        name="Place"
+                        component={Place}
+                        options={({ route, navigation }) => ({
+                            headerTitleAlign: "center",
+                            headerTitleStyle: {
+                                fontSize: 14,
+                                color: "#FFF"
+                            },
+                            title: route.params.place.title,
+                            headerStyle: {
+                                elevation: 0,
+                                backgroundColor: "#40AC59",
+                            },
+                            headerLeft: () => (
+                                <TouchableOpacity
+                                    onPress={() => navigation.goBack()}>
+                                    <Feather name="arrow-left" size={20} color="#FFF"
+                                        style={{ paddingLeft: 15 }} />
+                                </TouchableOpacity>),
+                            headerRight: () => (
+                                <TouchableOpacity
+                                    onPress={() => alert('This is a button!')}>
+                                    <Feather name="shopping-cart" size={20} color="#FFF"
+                                        style={{ paddingRight: 15 }} />
+                                </TouchableOpacity>)
                         })}
                     />
                 </Stack.Navigator>

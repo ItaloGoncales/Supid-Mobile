@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, ScrollView, Text, TouchableOpacity, FlatList, ImageBackground, SafeAreaView, Image } from 'react-native';
 
+import { useNavigation } from '@react-navigation/native';
+
 import { MaterialIcons } from '@expo/vector-icons';
 
 import styles from './styles';
@@ -51,16 +53,22 @@ const data = [
 ];
 
 export default function Main() {
+    const navigation = useNavigation();
     function renderPlace({ item }) {
         return (
-            <View style={styles.placeCard}>
+            <TouchableOpacity
+                activeOpacity={0.9}
+                onPress={() => navigation.navigate('Place', {
+                    place: item
+                })}
+                style={styles.placeCard}>
                 <Image source={require('../../assets/marketLogo.png')} style={styles.placeImage} resizeMode="cover" />
                 <View style={styles.placeDetailsContainer}>
                     <Text style={styles.placeTitle}>{item.title}</Text>
                     <Text style={styles.placeCategory}>{item.category}</Text>
                     <Text style={styles.placeInfo}><MaterialIcons name="timer" size={10} /> {item.time} min. - {item.distance} Km</Text>
                 </View>
-            </View>
+            </TouchableOpacity>
         );
     }
 
