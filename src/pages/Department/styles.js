@@ -31,47 +31,31 @@ export default StyleSheet.create({
         fontSize: screenWidth * 0.033,
         color: "#a3a3a3"
     },
-    pageContainer: {
-        paddingBottom: 120,
-    },
     productContainer: {
         paddingTop: 10,
         marginHorizontal: 10,
-        marginTop: 5,
-        borderColor: "#c3c3c3",
     },
-    separator: {
-        borderColor: "#c3c3c3",
-        borderTopWidth: 1
-    },
-    departmentCard: {
+    productCard: {
         flex: 1,
         flexDirection: "row",
         backgroundColor: "#FFF",
         width: "100%",
-        height: screenHeight * 0.06,
+        height: screenHeight * 0.15,
+        borderWidth: 1,
+        borderColor: "#c3c3c3",
+        elevation: 1,
+        borderRadius: 5,
+        marginBottom: 10,
+        paddingRight: 80,
+        paddingLeft: 10,
     },
-    departmentDetailContainer: {
+    productDetailsContainer: {
         flexDirection: "row",
         margin: 10,
-        paddingRight: 50,
-        alignSelf: "center",
-        alignItems: "center",
-        width: "100%"
+        alignSelf: "center"
     },
-    accessDepartment: {
-        color: "#a3a3a3",
-        position: "absolute",
-        right: 15,
-    },
-    departmentListContainer: {
-        marginBottom: 5
-    },
-    departmentListTitle: {
-        fontSize: (screenWidth) * 0.05,
-    },
-    departmentTitle: {
-        fontSize: (screenWidth) * 0.05,
+    productTitle: {
+        fontSize: (screenWidth) * 0.04,
     },
     productCategory: {
         color: "#c3c3c3",
@@ -81,6 +65,15 @@ export default StyleSheet.create({
         color: "#40AC59",
         fontSize: screenWidth * 0.04,
         marginTop: 5
+    },
+    productImage: {
+        width: 80,
+        height: 80,
+        borderColor: "#f0f0f0",
+        borderRadius: 50,
+        overflow: 'hidden',
+        justifyContent: "center",
+        alignSelf: "center"
     },
     itemPicker: {
         position: "absolute",

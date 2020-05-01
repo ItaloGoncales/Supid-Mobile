@@ -13,6 +13,7 @@
     "@react-navigation/stack": "^5.2.3",
     "@unform/core": "^2.0.0",
     "@unform/mobile": "^2.0.0",
+    "capitalize": "^2.0.3",
     "expo": "~36.0.0",
     "expo-constants": "~8.0.0",
     "expo-facebook": "~8.0.0",
