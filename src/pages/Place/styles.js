@@ -64,4 +64,27 @@ export default StyleSheet.create({
         fontSize: screenWidth * 0.04,
         marginTop: 5
     },
+    itemPicker: {
+        position: "absolute",
+        right: 10,
+        bottom: 10,
+        flexDirection: "row",
+        height: screenHeight * 0.05,
+        width: screenWidth * 0.3,
+        justifyContent: "center"
+    },
+    itemCounter: {
+        borderWidth: 0.5,
+        borderColor: "#c3c3c3",
+        textAlign: "center"
+    },
+    itemSelector: {
+        marginLeft: 5,
+        marginRight: 5,
+        marginTop: 0,
+        height: '100%',
+        width: 30,
+        borderRadius: 2,
+        backgroundColor: "#40AC59"
+    }
 });
