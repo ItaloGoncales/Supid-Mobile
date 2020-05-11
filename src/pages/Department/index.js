@@ -12,6 +12,8 @@ for (let index in data) {
 
 import styles from './styles';
 
+import capitalize from 'capitalize';
+
 export default function Place({ route }) {
     const place = route.params.place;
     const department = route.params.department;
@@ -32,6 +34,23 @@ export default function Place({ route }) {
     useEffect(() => {
         retrieveMore(routes[0].key);
     }, [])
+
+    function renderItemPicker(item) {
+        if (item.price == "")
+            return;
+
+        return (
+            <View style={styles.itemPicker}>
+                <SupidButton onPress={() => removeFromList(item)} text="-" style={styles.itemSelector} />
+                <TextInput
+                    value={typeof list[item.id] === 'undefined' ? "0" : `${list[item.id]}`}
+                    editable={false}
+                    style={styles.itemCounter}
+                />
+                <SupidButton onPress={() => addToList(item)} text="+" style={styles.itemSelector} />
+            </View>
+        )
+    }
 
     function addToList(item) {
         typeof list[item.id] === 'undefined'
@@ -56,7 +75,10 @@ export default function Place({ route }) {
     function retrieveMore(category) {
         setRefresh(true);
 
-        let newProducts = [...products, ...data.filter(item => item.category == category && !products.find(prod => prod.id == item.id))];
+        let newProducts = [...products, ...data.filter(item => item.category == category && !products.find(prod => prod.id == item.id)).sort((a, b) => {
+            if (a.price === "") return 1;
+            if (b.price === "") return -1;
+        })];
         newProducts = newProducts.splice(0, products.length + 10)
         setProducts(newProducts);
 
@@ -78,26 +100,24 @@ export default function Place({ route }) {
                 <View style={styles.productDetailsContainer}>
                     <View>
                         <Text style={styles.productTitle}>{item.title}</Text>
-                        <Text style={styles.productCategory}>{`${item.category} \u2022 ${item.brand}`}</Text>
-                        <Text style={styles.productPrice}>R$ {item.price}</Text>
+                        <Text style={styles.productCategory}>{`${capitalize.words(item.category.replace(/-/g, " "))} \u2022 ${item.brand}`}</Text>
+                        {item.price != ""
+                            ? <Text style={styles.productPrice}>R$ {item.price}</Text>
+                            : <Text style={styles.productPriceUnavailable}>Indisponível</Text>
+                        }
                     </View>
                 </View>
-                <View style={styles.itemPicker}>
-                    <SupidButton onPress={() => removeFromList(item)} text="-" style={styles.itemSelector} />
-                    <TextInput
-                        value={typeof list[item.id] === 'undefined' ? "0" : `${list[item.id]}`}
-                        editable={false}
-                        style={styles.itemCounter}
-                    />
-                    <SupidButton onPress={() => addToList(item)} text="+" style={styles.itemSelector} />
-                </View>
+                {renderItemPicker(item)}
             </View>
         );
     }
 
     function renderCategory(category) {
         return (<FlatList
-            data={products.filter(item => item.category == category)}
+            data={products.filter(item => item.category == category).sort((a, b) => {
+                if (a.price === "") return 1;
+                if (b.price === "") return -1;
+            })}
             renderItem={renderProduct}
             listKey={category}
             keyExtractor={item => item.id}
@@ -116,8 +136,6 @@ export default function Place({ route }) {
             .reduce((obj, item) => ({ ...obj, ...item }), {})
     );
 
-    console.log(data.length, products.length)
-
     return (
         <View style={styles.container}>
             <FlatList
@@ -129,7 +147,7 @@ export default function Place({ route }) {
                             <Image source={require('../../assets/marketLogo.png')} style={styles.placeImage} resizeMode="cover" />
                             <View style={styles.placeDetailsContainer}>
                                 <Text style={styles.placeTitle}>{place.title}</Text>
-                                <Text style={styles.placeInfo}>{place.department}</Text>
+                                <Text style={styles.placeInfo}>{place.category}</Text>
                                 <Text style={styles.placeInfo}>{place.distance}km de distância</Text>
                                 <Text style={styles.placeInfo}>Entrega em {place.time} min.</Text>
                             </View>
@@ -152,7 +170,7 @@ export default function Place({ route }) {
                                                 fontSize: 10,
                                                 width: 120 * routes.length
                                             }}
-                                            getLabelText={({ route }) => route.title.replace(/-/g, " ")}
+                                            getLabelText={({ route }) => capitalize.words(route.title.replace(/-/g, " "))}
                                             indicatorStyle={{
                                                 backgroundColor: '#40AC59',
                                             }}

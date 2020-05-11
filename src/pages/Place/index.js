@@ -38,7 +38,7 @@ export default function Place({ route }) {
                 <Image source={require('../../assets/marketLogo.png')} style={styles.placeImage} resizeMode="cover" />
                 <View style={styles.placeDetailsContainer}>
                     <Text style={styles.placeTitle}>{place.title}</Text>
-                    <Text style={styles.placeInfo}>{place.department}</Text>
+                    <Text style={styles.placeInfo}>{place.category}</Text>
                     <Text style={styles.placeInfo}>{place.distance}km de distância</Text>
                     <Text style={styles.placeInfo}>Entrega em {place.time} min.</Text>
                 </View>

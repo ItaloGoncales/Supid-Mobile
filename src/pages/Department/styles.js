@@ -66,6 +66,11 @@ export default StyleSheet.create({
         fontSize: screenWidth * 0.04,
         marginTop: 5
     },
+    productPriceUnavailable: {
+        color: "#c3c3c3",
+        fontSize: screenWidth * 0.04,
+        marginTop: 5
+    },
     productImage: {
         width: 80,
         height: 80,
