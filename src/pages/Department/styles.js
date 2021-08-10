@@ -4,7 +4,8 @@ const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 export default StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        flexShrink: 1
     },
     placeHeader: {
         backgroundColor: "#fff",
@@ -92,7 +93,9 @@ export default StyleSheet.create({
     itemCounter: {
         borderWidth: 0.5,
         borderColor: "#c3c3c3",
-        textAlign: "center"
+        color: "#030303",
+        textAlign: "center",
+        width: 30
     },
     itemSelector: {
         marginLeft: 5,

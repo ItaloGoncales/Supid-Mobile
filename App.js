@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 
 import { StatusBar, BackHandler, Alert, AsyncStorage } from 'react-native'
 
-import * as Permissions from 'expo-permissions';
 import * as Location from 'expo-location';
 
 import 'react-native-gesture-handler';
@@ -30,7 +29,7 @@ export default function App() {
     });
 
     async function alertIfRemoteNotificationsDisabledAsync() {
-      const { status } = await Permissions.askAsync(Permissions.LOCATION);
+      const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
         await AsyncAlert('Olá! Para o funcionamento correto do aplicativo, é necessário ativar a localização.');
         BackHandler.exitApp();

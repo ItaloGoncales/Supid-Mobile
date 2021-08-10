@@ -138,57 +138,51 @@ export default function Place({ route }) {
 
     return (
         <View style={styles.container}>
-            <FlatList
-                data={[1]}
-                keyExtractor={() => "ParentList"}
-                renderItem={() => (
-                    <>
-                        <View style={styles.placeHeader}>
-                            <Image source={require('../../assets/marketLogo.png')} style={styles.placeImage} resizeMode="cover" />
-                            <View style={styles.placeDetailsContainer}>
-                                <Text style={styles.placeTitle}>{place.title}</Text>
-                                <Text style={styles.placeInfo}>{place.category}</Text>
-                                <Text style={styles.placeInfo}>{place.distance}km de distância</Text>
-                                <Text style={styles.placeInfo}>Entrega em {place.time} min.</Text>
-                            </View>
+            <>
+                <View style={styles.placeHeader}>
+                    <Image source={require('../../assets/marketLogo.png')} style={styles.placeImage} resizeMode="cover" />
+                    <View style={styles.placeDetailsContainer}>
+                        <Text style={styles.placeTitle}>{place.title}</Text>
+                        <Text style={styles.placeInfo}>{place.category}</Text>
+                        <Text style={styles.placeInfo}>{place.distance}km de distância</Text>
+                        <Text style={styles.placeInfo}>Entrega em {place.time} min.</Text>
+                    </View>
+                </View>
+                <TabView
+                    navigationState={{ index, routes }}
+                    renderScene={renderScene}
+                    swipeEnabled={false}
+                    onIndexChange={idx => setTabIndex(idx)}
+                    renderTabBar={props =>
+                        <View>
+                            <ScrollView
+                                horizontal={true}
+                                showsHorizontalScrollIndicator={false}
+                                ref={scrollViewRef}
+                                nestedScrollEnabled={true}>
+                                <TabBar
+                                    style={{
+                                        backgroundColor: "#fff",
+                                        fontSize: 10,
+                                        width: 120 * routes.length
+                                    }}
+                                    getLabelText={({ route }) => capitalize.words(route.title.replace(/-/g, " "))}
+                                    indicatorStyle={{
+                                        backgroundColor: '#40AC59',
+                                    }}
+                                    labelStyle={{
+                                        color: "#0c0c0c",
+                                        fontSize: 10,
+                                        textAlign: "center",
+                                    }}
+                                    {...props}
+                                />
+                            </ScrollView>
                         </View>
-                        <SafeAreaView>
-                            <TabView
-                                navigationState={{ index, routes }}
-                                renderScene={renderScene}
-                                swipeEnabled={false}
-                                onIndexChange={idx => setTabIndex(idx)}
-                                renderTabBar={props =>
-                                    <ScrollView
-                                        horizontal={true}
-                                        showsHorizontalScrollIndicator={false}
-                                        ref={scrollViewRef}
-                                        nestedScrollEnabled={true}>
-                                        <TabBar
-                                            style={{
-                                                backgroundColor: "#fff",
-                                                fontSize: 10,
-                                                width: 120 * routes.length
-                                            }}
-                                            getLabelText={({ route }) => capitalize.words(route.title.replace(/-/g, " "))}
-                                            indicatorStyle={{
-                                                backgroundColor: '#40AC59',
-                                            }}
-                                            labelStyle={{
-                                                color: "#0c0c0c",
-                                                fontSize: 10,
-                                                textAlign: "center",
-                                            }}
-                                            {...props}
-                                        />
-                                    </ScrollView>
-                                }
+                    }
 
-                            />
-                        </SafeAreaView>
-                    </>
-                )}
-            />
+                />
+            </>
         </View >
     );
 }
